@@ -13,7 +13,7 @@
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_play_circle_outline" />

@@ -7,10 +7,13 @@ import mr.adkhambek.infinity.databinding.ItemImageBinding
 import mr.adkhambek.infinity.databinding.ItemVedioBinding
 import mr.adkhambek.infinity.util.load
 
+interface BaseViewHolderProvider {
+    fun create(view: View): BaseVH
+}
+
 abstract class BaseVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
     abstract fun bind(baseItem: BaseItem?)
 }
-
 
 class AdvertisementVH(private val binding: ItemAdvertisementBinding) : BaseVH(binding.root) {
     override fun bind(baseItem: BaseItem?) {

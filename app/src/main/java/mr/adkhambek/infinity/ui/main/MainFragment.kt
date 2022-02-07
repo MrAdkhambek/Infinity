@@ -23,8 +23,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.main_fragment) {
 
-    @Inject
-    lateinit var infinityAdapterProvider: Lazy<InfinityAdapter>
+    @Inject lateinit var infinityAdapterProvider: Lazy<InfinityAdapter>
 
     private val vm: MainViewModel by viewModels()
     private val vb: MainFragmentBinding by viewBinding(MainFragmentBinding::bind)

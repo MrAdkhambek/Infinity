@@ -17,7 +17,7 @@ private const val TIP_IMAGE = R.layout.item_image
 class InfinityAdapter : PagingDataAdapter<BaseItem, BaseVH>(BaseItemDiffUtil()) {
 
     override fun onBindViewHolder(holder: BaseVH, position: Int) {
-        val item = getItem(position)
+        val item: BaseItem? = getItem(position)
         holder.bind(item)
     }
 

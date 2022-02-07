@@ -1,5 +1,6 @@
 package mr.adkhambek.infinity.ui.main.adapter
 
+
 sealed class BaseItem {
 
     abstract val uniqueId: String

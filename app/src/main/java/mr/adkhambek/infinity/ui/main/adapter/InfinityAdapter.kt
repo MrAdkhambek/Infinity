@@ -9,9 +9,9 @@ import mr.adkhambek.infinity.databinding.ItemImageBinding
 import mr.adkhambek.infinity.databinding.ItemVedioBinding
 
 
-private const val TIP_ADVERTISEMENT = R.layout.item_advertisement
-private const val TIP_VIDEO = R.layout.item_vedio
-private const val TIP_IMAGE = R.layout.item_image
+internal const val TIP_ADVERTISEMENT = R.layout.item_advertisement
+internal const val TIP_VIDEO = R.layout.item_vedio
+internal const val TIP_IMAGE = R.layout.item_image
 
 
 class InfinityAdapter : PagingDataAdapter<BaseItem, BaseVH>(BaseItemDiffUtil()) {

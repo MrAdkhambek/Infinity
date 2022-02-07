@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import mr.adkhambek.infinity.data.MainMediator
+import mr.adkhambek.infinity.data.Repository
 import mr.adkhambek.infinity.ui.main.adapter.BaseItem
 import javax.inject.Inject
 
@@ -13,8 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @ExperimentalPagingApi
 @Inject constructor(
+    private val repository: Repository,
     private val mainMediatorFactory: MainMediator.Factory
 ) : ViewModel() {
+
+    val topItems: Flow<List<BaseItem>> = flow {
+        emit(repository.loadWithoutPaging())
+    }
 
     val baseItems: Flow<PagingData<BaseItem>> = Pager(PagingConfig(pageSize = 20)) {
         mainMediatorFactory.create()

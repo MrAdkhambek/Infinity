@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 import mr.adkhambek.infinity.R
 import mr.adkhambek.infinity.databinding.MainFragmentBinding
 import mr.adkhambek.infinity.ui.main.adapter.InfinityAdapter
+import mr.adkhambek.infinity.ui.main.adapter.SampleAdapter
 import mr.adkhambek.infinity.ui.main.adapter.TIP_ADVERTISEMENT
 import mr.adkhambek.infinity.ui.main.adapter.TIP_VIDEO
 import mr.adkhambek.infinity.util.SpacingItemDecorator
@@ -30,12 +32,18 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private fun setupRecycler() = with(vb.main) {
-        val adapter = InfinityAdapter()
+        val infinityAdapter = InfinityAdapter()
+        val sampleAdapter = SampleAdapter()
+
+        val concatAdapter = ConcatAdapter(
+            sampleAdapter,
+            infinityAdapter
+        )
 
         val layoutManager = GridLayoutManager(this.context, 3)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return when (adapter.getItemViewType(position)) {
+                return when (concatAdapter.getItemViewType(position)) {
                     TIP_ADVERTISEMENT -> 3
                     TIP_VIDEO -> 2
                     else -> 1
@@ -44,12 +52,16 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            vm.baseItems.collectLatest(adapter::submitData)
+            vm.topItems.collectLatest(sampleAdapter::submitList)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            vm.baseItems.collectLatest(infinityAdapter::submitData)
         }
 
         this.addItemDecoration(SpacingItemDecorator((resources.displayMetrics.density * 0.5).toInt()))
         this.layoutManager = layoutManager
-        this.adapter = adapter
+        this.adapter = concatAdapter
     }
 
     override fun onDestroyView() {
